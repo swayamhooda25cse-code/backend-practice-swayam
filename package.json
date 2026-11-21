@@ -1,23 +1,16 @@
+
 {
-  "name": "basic-practice-of-backend-backend",
+  "name": "basic-practice-swayam",
   "version": "1.0.0",
-  "description": "a tutorial for intro to backend",
+  "description": "A tutorial for intro to backend",
   "main": "backend/src/index.js",
   "type": "module",
   "scripts": {
     "start": "node backend/src/index.js",
     "dev": "nodemon backend/src/index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hem7dev-rgb/basic-practice-of-backend-backend.git"
-  },
-  "author": "Hemdev Singh",
+  "author": "Swayam Hooda",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/hem7dev-rgb/basic-practice-of-backend-backend/issues"
-  },
-  "homepage": "https://github.com/hem7dev-rgb/basic-practice-of-backend-backend#readme",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "dotenv": "^17.2.2",

@@ -1,11 +1,24 @@
-import { Router } from 'express';
-import { createPost, deletePost, getPosts, updatePost } from '../controllers/post.controller.js';
+import { Router } from "express";
+
+import {
+    createPost,
+    getPosts,
+    updatePost,
+    deletePost
+} from "../controllers/post.controller.js";
 
 const router = Router();
 
-router.route('/create').post(createPost);
-router.route('/getPosts').get(getPosts);
-router.route('/update/:id').patch(updatePost);
-router.route('/delete/:id').delete(deletePost);
+// Create a post
+router.post("/create", createPost);
+
+// Get all posts
+router.get("/getPosts", getPosts);
+
+// Update a post
+router.patch("/update/:id", updatePost);
+
+// Delete a post
+router.delete("/delete/:id", deletePost);
 
 export default router;

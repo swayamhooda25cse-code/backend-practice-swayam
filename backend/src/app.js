@@ -1,18 +1,31 @@
 import express from "express";
 
-const app = express();  // create an express app
+const app = express();
 
 app.use(express.json());
 
-// routes import
-import userRouter from './routes/user.route.js'; 
-import postRouter from './routes/post.route.js';
+// Import routes
+import userRouter from "./routes/user.route.js";
+import postRouter from "./routes/post.route.js";
 
-
-// routes declaration
+// Register API routes
 app.use("/api/v1/users", userRouter);
-app.use("/api/v1/posts", postRouter)
+app.use("/api/v1/posts", postRouter);
 
-// example route: http://localhost:4000/api/v1/users/register
+// Health check route
+app.get("/", (req, res) => {
+    res.status(200).json({
+        success: true,
+        message: "Backend server is running"
+    });
+});
+
+// Handle unknown routes
+app.use((req, res) => {
+    res.status(404).json({
+        success: false,
+        message: "Route not found"
+    });
+});
 
 export default app;

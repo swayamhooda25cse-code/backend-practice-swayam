@@ -1,94 +1,114 @@
+
 import { Post } from "../models/post.model.js";
 
 // Create a post
 const createPost = async (req, res) => {
     try {
-        const { name, description, age} = req.body;
+        const { name, description, age } = req.body;
 
-        if(!name || !description || !age) {
+        if (!name || !description || age == null) {
             return res.status(400).json({
-                message: "All field are required"
+                message: "All fields are required"
             });
         }
 
-        const post = await Post.create({ name, description, age });
+        const post = await Post.create({
+            name,
+            description,
+            age
+        });
 
         res.status(201).json({
-            message: "Post created successfully", post
+            message: "Post created successfully",
+            post
         });
-    
+
     } catch (error) {
         res.status(500).json({
-            message: "Internal Server error", error
+            message: "Internal server error"
         });
     }
-}
+};
 
-// Read all posts
+
+// Get all posts
 const getPosts = async (req, res) => {
     try {
         const posts = await Post.find();
+
         res.status(200).json(posts);
+
     } catch (error) {
         res.status(500).json({
-            message: "Internal Server error", 
-            error
+            message: "Internal server error"
         });
     }
-}
+};
 
 
+// Update a post
 const updatePost = async (req, res) => {
     try {
-        // basic validaiton to check if the body is empty
-
-        // {name: x, description: y, age: z} -> [name, description, age]
-        // {} = truthy 
-        if(Object.keys(req.body).length === 0) {
+        if (Object.keys(req.body).length === 0) {
             return res.status(400).json({
-                message: "No data provided for update"
+                message: "No data provided"
             });
         }
 
-        const post = await Post.findByIdAndUpdate(req.params.id, req.body, {new: true});
+        const post = await Post.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {
+                new: true,
+                runValidators: true
+            }
+        );
 
-        if(!post) return res.status(404).json({
-            message: "Post not found"
-        });
+        if (!post) {
+            return res.status(404).json({
+                message: "Post not found"
+            });
+        }
 
         res.status(200).json({
-            message: "Post Updated Successfully", post
+            message: "Post updated successfully",
+            post
         });
 
     } catch (error) {
-                res.status(500).json({
-            message: "Internal Server error", 
-            error
+        res.status(500).json({
+            message: "Internal server error"
+        });
+    }
+};
 
-    })
-}
-}
 
+// Delete a post
 const deletePost = async (req, res) => {
     try {
-        const deleted = await Post.findByIdAndDelete(req.params.id);
-        if(!deleted) return res.status(404).json({
-            message: "Post not found"
-        });
+        const post = await Post.findByIdAndDelete(req.params.id);
+
+        if (!post) {
+            return res.status(404).json({
+                message: "Post not found"
+            });
+        }
 
         res.status(200).json({
-            message: "Post successfully deleted"
-        })
+            message: "Post deleted successfully"
+        });
+
     } catch (error) {
-         res.status(500).json({
-            message: "Internal Server error", 
-            error
-    });
-}
-}
+        res.status(500).json({
+            message: "Internal server error"
+        });
+    }
+};
+
+
 export {
-createPost,
-getPosts,
-updatePost,
-deletePost
+    createPost,
+    getPosts,
+    updatePost,
+    deletePost
 };
